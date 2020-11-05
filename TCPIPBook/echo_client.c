@@ -12,6 +12,7 @@
   This client can send more than 2 strng messages to server at the same time. 
   But at this situation, server would respond both as well to client, and it can cause some problem not to get an expected result.
   Even though this program will be able to be looked like working very well. But still there are some potential error probabilities to be occurred.
+  If there is a long length data, a server could decide whether they devide the data as 2 packets
   */
 
 void error_handling(char* message) ;
@@ -50,8 +51,19 @@ int main(int argc, char* argv[]){
 		if(!strcmp(message, "q\n") || !strcmp(message, "Q\n"))
 			break ;
 
-		write(sock, message, strlen(message)) ;
-		str_len = read(sock, message, BUF_SIZE-1) ;
+		/*write(sock, message, strlen(message)) ;
+		str_len = read(sock, message, BUF_SIZE-1) ;*/
+		
+		// this sniffet is for getting as much data as a server sends
+		str_len = write(sock, message, strlen(message)) ; 
+
+		recv_len = 0 ;
+		while(recv_len < str_len){
+			recv_cnt = read(sock, &message[recv_len], BUF_SIZE-1) ;
+			if(recv_cnt == -1)
+				error_handling("read() error.") ;
+			recv_len += recv_cnt ;
+		}
 		message[str_len] = 0 ;
 		printf("Message from server: %s", message) ;
 	}
@@ -65,3 +77,8 @@ void error_handling(char* message){
 	fputc('\n', stderr) ;
 	exit(1) ;
 }
+
+// TCP client action procedure : 
+// socket() -> connect() -> read()/write() -> close()
+// Then how can we supply the lack portion?? If the server send 20 bytes string into client
+// and just repeat read() function 'til the end of string. 

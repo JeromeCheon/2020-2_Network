@@ -18,10 +18,12 @@ int main(int argc, char* argv[]) {
 		exit(1) ;
 	}
 
-	sock = socket(PF_INET, SOCK_STREAM, 0) ;
+	sock = socket(PF_INET, SOCK_STREAM, 0) ; // create the socket to connect to server. [TCP socket]
+	
 	if(sock == -1 )
 		error_handling("socket() error" ) ;
-	memset(&serv_addr, 0, sizeof(serv_addr)) ;
+
+	memset(&serv_addr, 0, sizeof(serv_addr)) ; // Initialize the structure members 'serv_addr' for connection
 	serv_addr.sin_family = AF_INET ;
 	serv_addr.sin_addr.s_addr = inet_addr(argv[1]) ;
 	serv_addr.sin_port = htons(atoi(argv[2])) ;
@@ -29,12 +31,13 @@ int main(int argc, char* argv[]) {
 	if(connect(sock, (struct sockaddr*)&serv_addr, sizeof(serv_addr)) == -1)
 		error_handling("connect() error!") ;
 
-	str_len = read(sock, message, sizeof(message) -1 ) ;
+	str_len = read(sock, message, sizeof(message) -1 ) ; // after succeeding connection, read the data from the server
+	
 	if(str_len == -1)
 		error_handling("read() error!") ;
 
 	printf("Message from server : %s \n", message) ;
-	close(sock) ;
+	close(sock) ; // after taking the messages from server, close the socket and connection would be fail. 
 	return 0 ;
 }
 
