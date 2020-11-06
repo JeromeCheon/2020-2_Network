@@ -21,7 +21,7 @@ int main(int argc, char* argv[]){
 	int sock ;
 	char message[BUF_SIZE] ;
 	int str_len ;
-
+	int recv_len, recv_cnt ;
 	struct sockaddr_in serv_adr ;
 
 	if(argc != 3){
