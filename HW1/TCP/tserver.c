@@ -5,14 +5,14 @@
 #include <arpa/inet.h>
 #include <sys/socket.h>
 
-#define BUF_SIZE 30
+#define BUFSIZE 30
 
 void error_handling(char* message) ;
 
 int main(int argc, char* argv[]){
 	int serv_sock;
 	int clnt_sock;
-	char message[BUF_SIZE] ;
+	char message[BUFSIZE] ;
 	int str_len, num = 0;
 	int recv_len ;
 	struct sockaddr_in serv_addr ;
@@ -35,6 +35,7 @@ int main(int argc, char* argv[]){
 
 	if(bind(serv_sock, (struct sockaddr*)&serv_addr, sizeof(serv_addr)) == -1)
 		error_handling("bind() error") ;
+
 	/*  TCP	*/
 	if(listen(serv_sock, 5) == -1)
 		error_handling("listen error.....");
@@ -54,7 +55,7 @@ int main(int argc, char* argv[]){
 	while(1)
 	{
 		sleep(1) ;
-		str_len = read(clnt_sock, message, BUF_SIZE) ;
+		str_len = read(clnt_sock, message, BUFSIZE) ;
 		if( str_len == 0 )
 			error_handling("connection closed...") ;
 		message[str_len] = 0 ;

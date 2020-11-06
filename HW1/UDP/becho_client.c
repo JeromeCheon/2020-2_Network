@@ -15,7 +15,6 @@ int main(int argc, char* argv[]){
 	char message[BUFSIZE] ;
 	int str_len, i ;
 	socklen_t addr_size ;
-
 	
 	//char MSG1[] = "Good" ;
 	//char MSG2[] = "Evening " ;
@@ -35,7 +34,7 @@ int main(int argc, char* argv[]){
 
 	memset(&serv_addr, 0, sizeof(serv_addr)) ;
 	serv_addr.sin_family = AF_INET ;
-	serv_addr.sin_addr.s_addr = inet_addr(argv[1]) ;
+	serv_addr.sin_addr.s_addr = inet_addr(argv[2]) ;
 	serv_addr.sin_port = htons(atoi(argv[1])) ;
 
 	sendto(sock, MSG[0], strlen(MSG[0]), 0,
