@@ -49,19 +49,17 @@ int main(int argc, char* argv[]){
 	else
 		printf("Connected!\n");
 	
-	// recv_len = 0 ;
 	sleep(5) ;
 
 	while(1)
 	{
 		sleep(1) ;
-		str_len = read(clnt_sock, message, BUFSIZE) ;
-		if( str_len == 0 )
-			error_handling("connection closed...") ;
+		str_len = recv(clnt_sock, message, BUFSIZE, 0) ;
+		/* if( str_len == 0 )
+			error_handling("connection closed...") ; */
 		message[str_len] = 0 ;
 		printf("message from client: %s\n", message);
-		write(clnt_sock, message, str_len);
-		// recv_len += str_len ;
+		send(clnt_sock, message, str_len, 0);
 	}
 	close(clnt_sock);
 	//close(serv_sock) ;

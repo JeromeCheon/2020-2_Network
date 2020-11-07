@@ -42,8 +42,8 @@ int main(int argc, char* argv[]){
 
 
 	for(i = 0 ; i < 3 ; i++){
-		write(sock, MSG[i], strlen(MSG[i]));
-		str_len = read(sock, message, BUFSIZE);
+		send(sock, MSG[i], strlen(MSG[i]), 0);
+		str_len = recv(sock, message, BUFSIZE, 0);
 		message[str_len] = 0;
 		printf(" Message %d th from server: %s\n", i, message) ;
 	}
@@ -54,6 +54,6 @@ int main(int argc, char* argv[]){
 
 void error_handling(char* message){
 	fputs(message, stderr) ;
-	fputc("\n", stderr) ;
+	fputc('\n', stderr) ;
 	exit(1) ;
 }
