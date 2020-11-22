@@ -16,10 +16,10 @@ int main(int argc, char* argv[]){
 	int str_len, i ;
 	socklen_t addr_size ;
 	
-	//char MSG1[] = "Good" ;
-	//char MSG2[] = "Evening " ;
-	//char MSG3[] = "Everybody!" ;
-	char MSG[3][20] = {"Good", "Evening", "Everybody!"} ;
+	char MSG1[] = "Good" ;
+	char MSG2[] = "Evening" ;
+	char MSG3[] = "Everybody!" ;
+	// char MSG3[] = "" ; // string with nothing
 
 	struct sockaddr_in serv_addr, from_addr ;
 
@@ -37,11 +37,11 @@ int main(int argc, char* argv[]){
 	serv_addr.sin_addr.s_addr = inet_addr(argv[2]) ;
 	serv_addr.sin_port = htons(atoi(argv[1])) ;
 
-	sendto(sock, MSG[0], strlen(MSG[0]), 0,
+	sendto(sock, MSG1, strlen(MSG1), 0,
 			(struct sockaddr*)&serv_addr, sizeof(serv_addr)) ;
-	sendto(sock, MSG[1], strlen(MSG[1]), 0,
+	sendto(sock, MSG2, strlen(MSG2), 0,
 			(struct sockaddr*)&serv_addr, sizeof(serv_addr)) ;
-	sendto(sock, MSG[2], strlen(MSG[2]), 0,
+	sendto(sock, MSG3, strlen(MSG3), 0,
 			(struct sockaddr*)&serv_addr, sizeof(serv_addr)) ;
 
 	for(i = 0 ; i < 3 ; i++){

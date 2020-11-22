@@ -9,16 +9,15 @@
 
 void error_handling(char* message) ;
 
-// make sure there is no connect() function unlike tcp
 int main(int argc, char* argv[]){
 	int sock ;
 	char message[BUFSIZE] ;
 	int str_len, i ;
 	socklen_t addr_size ;
-
-
-	char MSG[3][20] = {"Good", "Evening", "Everybody!"};
-
+	char MSG1[] = "Good" ;
+	char MSG2[] = "Evening" ;
+	char MSG3[] = "Everybody" ;
+	
 	struct sockaddr_in serv_addr;
 
 	if(argc != 3){
@@ -40,12 +39,17 @@ int main(int argc, char* argv[]){
 	else
 		puts("Connection succeeded");
 
+	send(sock, MSG1, strlen(MSG1), 0) ;
+	send(sock, MSG2, strlen(MSG2), 0) ;
+	send(sock, MSG3, strlen(MSG3), 0) ;
 
 	for(i = 0 ; i < 3 ; i++){
-		send(sock, MSG[i], strlen(MSG[i]), 0);
 		str_len = recv(sock, message, BUFSIZE, 0);
 		message[str_len] = 0;
 		printf(" Message %d th from server: %s\n", i, message) ;
+		
+		/* for problem 5 */
+		close(sock) ;
 	}
 	
 	close(sock) ;

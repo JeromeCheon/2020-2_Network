@@ -41,6 +41,10 @@ int main(int argc, char* argv[]){
 		sleep(1) ;
 		str_len = recvfrom(serv_sock, message, BUFSIZE, 0,
 				(struct sockaddr*)&clnt_addr, &clnt_addr_size) ;
+		/* for problem 5 */
+		if(str_len >= 0)
+			printf("recvfrom returns byte count %d........\n", str_len) ;
+
 		printf(" Receive number : %d \n", num++) ;
 		sendto(serv_sock, message, str_len, 0,
 				(struct sockaddr*)&clnt_addr, sizeof(clnt_addr)) ;
